@@ -1,6 +1,7 @@
 package client;
 import java.io.*; 
 import java.net.*;
+<<<<<<< HEAD
 import javax.swing.SwingWorker;
 public class Client extends SwingWorker<Void, Integer> {
 	private int length;
@@ -29,16 +30,18 @@ public class Client extends SwingWorker<Void, Integer> {
 		String serverHostname = new String(host);
 		InetAddress IPAddress = InetAddress.getByName(serverHostname);
 		DatagramSocket clientSocket = new DatagramSocket();
+=======
+public class Client {
+	public static void main(String[] args) throws Exception {
+		String t = new String();
+		DatagramSocket clientSocket = new DatagramSocket(9876);
+>>>>>>> parent of 48b01a4... Hoàn thành cơ bản giao diện sử dụng và gửi nhận file thành công
 		DatagramPacket receivePacket;
 		byte[] arr = new byte[1024];
-		byte[] b = new byte[1024];
-		String mess = new String("Begin");
-		b = mess.getBytes();
-		sendData(b, IPAddress, port);
-		clientSocket.close();
-		File destFile = new File("G:\\file\\"+fileName);
+		File destFile = new File("G:\\file\\out.rar");
 		FileOutputStream fos = new FileOutputStream(destFile, true);
 		long i = 0;
+<<<<<<< HEAD
 		clientSocket = new DatagramSocket(port);
 		receivePacket = new DatagramPacket(arr, 0, arr.length);
 		clientSocket.receive(receivePacket);
@@ -73,5 +76,24 @@ public class Client extends SwingWorker<Void, Integer> {
 		fos.close();
 		clientSocket.close();
 		return null;
+=======
+		System.out.println("Begin");
+		try {
+			do {
+				receivePacket = new DatagramPacket(arr, 0, arr.length);
+				clientSocket.receive(receivePacket);
+				if (receivePacket.getLength() == 1024) {
+					fos.write(arr);
+					i++;
+					System.out.println("# "+i+ " kb");
+				}
+			} while (receivePacket.getLength() == 1024);
+			System.out.println("finish");
+			fos.close();
+			clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+>>>>>>> parent of 48b01a4... Hoàn thành cơ bản giao diện sử dụng và gửi nhận file thành công
 	}
 }
